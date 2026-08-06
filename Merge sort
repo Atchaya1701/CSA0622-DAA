@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+int a[100], temp[100];
+int count = 0;   // Counts comparisons
+
+void merge(int low, int mid, int high)
+{
+    int i = low, j = mid + 1, k = low;
+
+    while (i <= mid && j <= high)
+    {
+        count++;    // Comparison count
+
+        if (a[i] <= a[j])
+            temp[k++] = a[i++];
+        else
+            temp[k++] = a[j++];
+    }
+
+    while (i <= mid)
+        temp[k++] = a[i++];
+
+    while (j <= high)
+        temp[k++] = a[j++];
+
+    for (i = low; i <= high; i++)
+        a[i] = temp[i];
+}
+
+void mergeSort(int low, int high)
+{
+    if (low < high)
+    {
+        int mid = (low + high) / 2;
+
+        mergeSort(low, mid);
+        mergeSort(mid + 1, high);
+
+        merge(low, mid, high);
+    }
+}
+
+int main()
+{
+    int n, i;
+
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter the elements:\n");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    mergeSort(0, n - 1);
+
+    printf("\nSorted Array:\n");
+    for (i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
+    printf("\n\nTotal Comparisons = %d\n", count);
+
+    printf("\nTime Complexity:\n");
+    printf("Best Case    : O(n log n)\n");
+    printf("Average Case : O(n log n)\n");
+    printf("Worst Case   : O(n log n)\n");
+
+    return 0;
+}
