@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int max(int a[], int low, int high)
+{
+    if(low == high)
+        return a[low];
+
+    int mid = (low + high) / 2;
+
+    int leftMax = max(a, low, mid);
+    int rightMax = max(a, mid + 1, high);
+
+    if(leftMax > rightMax)
+        return leftMax;
+    else
+        return rightMax;
+}
+
+int main()
+{
+    int a[100], n, i, maximum;
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter elements:\n");
+    for(i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+
+    maximum = max(a, 0, n - 1);
+
+    printf("\nMaximum element = %d", maximum);
+
+    printf("\nTime Complexity : O(n)");
+
+    return 0;
+}
